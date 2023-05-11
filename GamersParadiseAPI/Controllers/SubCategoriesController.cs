@@ -6,15 +6,24 @@ public class SubCategoriesController : ControllerBase
 {
 	private static List<SubCategory> _categories;
 
+	private static MainCategoryController _mainCategoryController;
+
+	private static MainCategory _mainCategory;
+
 	[HttpGet]
 	public async Task<List<SubCategory>> GetSubCategories()
 	{
-		if (_categories is null)
+
+		_mainCategory = _mainCategoryController.GetOneMainCategory();
+
+
+        if (_mainCategory.SubCategories is null)
 		{
-			//TODO: Ta bort!
-			_categories = new List<SubCategory>();
-			_categories.Add(new SubCategory { Id = 1, Name = "Playstation", UserThreads = null });
-			_categories.Add(new SubCategory { Id = 2, Name = "Xbox", UserThreads = null });
+            //TODO: Ta bort!
+            _mainCategory.SubCategories = new List<SubCategory>();
+            _categories = new List<SubCategory>();
+			_categories.Add(new SubCategory { Id = 1, Name = "Playstation 5", UserThreads = null });
+			_categories.Add(new SubCategory { Id = 2, Name = "Playstation 4", UserThreads = null });
 		}
 		return _categories;
 	}
