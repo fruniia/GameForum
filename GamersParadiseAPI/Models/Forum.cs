@@ -1,0 +1,8 @@
+﻿namespace GamersParadiseAPI.Models;
+
+public class Forum
+{
+	public int Id { get; set; }
+	public string Name { get; set; }
+	public List<SubCategory>? SubCategories { get; set; }
+}
