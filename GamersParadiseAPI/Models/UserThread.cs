@@ -1,5 +1,5 @@
 ﻿namespace GamersParadiseAPI.Models;
-public class Post
+public class UserThread
 {
 	public int Id { get; set; }
 	public int Score { get; set; }

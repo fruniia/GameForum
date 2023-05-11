@@ -2,6 +2,6 @@
 
 [Route("api/[controller]")]
 [ApiController]
-public class CommentController : ControllerBase
+public class MessagesController : ControllerBase
 {
 }
