@@ -6,25 +6,12 @@ public class SubCategoriesController : ControllerBase
 {
 	private static List<SubCategory> _categories;
 
-	private static MainCategoryController _mainCategoryController;
-
-	private static MainCategory _mainCategory;
 
 	[HttpGet]
-	public async Task<List<SubCategory>> GetSubCategories()
+	public async Task<List<SubCategory>> Get()
 	{
-
-		_mainCategory = _mainCategoryController.GetOneMainCategory();
-
-
-        if (_mainCategory.SubCategories is null)
-		{
-            //TODO: Ta bort!
-            _mainCategory.SubCategories = new List<SubCategory>();
-            _categories = new List<SubCategory>();
-			_categories.Add(new SubCategory { Id = 1, Name = "Playstation 5", UserThreads = null });
-			_categories.Add(new SubCategory { Id = 2, Name = "Playstation 4", UserThreads = null });
-		}
+		
+		_categories = await SubcategoryManager.GetSubCategories();
 		return _categories;
 	}
 
@@ -33,7 +20,7 @@ public class SubCategoriesController : ControllerBase
 	{
 		if (_categories is null)
 		{
-			_categories = await GetSubCategories();
+			_categories = await SubcategoryManager.GetSubCategories();
 		}
 		var category = _categories.Where(x => x.Id == id).FirstOrDefault();
 
@@ -45,9 +32,9 @@ public class SubCategoriesController : ControllerBase
 	{
 		if (_categories is null)
 		{
-			_categories = await GetSubCategories();
-		}
-		subCategory.Id = _categories.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
+            _categories = await SubcategoryManager.GetSubCategories();
+        }
+        subCategory.Id = _categories.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
 		subCategory.UserThreads = null;
 		_categories.Add(subCategory);
 	}
@@ -57,13 +44,15 @@ public class SubCategoriesController : ControllerBase
 	{
 		if (_categories is null)
 		{
-			_categories = await GetSubCategories();
-		}
+            _categories = await SubcategoryManager.GetSubCategories();
+        }
 
-		var category = _categories.Where(x => x.Id == id).FirstOrDefault();
+        var category = _categories.Where(x => x.Id == id).FirstOrDefault();
 		if (category is not null)
 		{
 			category.Name = subCategory.Name;
+			category.UserThreads = subCategory.UserThreads;
+
 		}
 
 	}
@@ -73,11 +62,12 @@ public class SubCategoriesController : ControllerBase
 	{
 		if (_categories is null)
 		{
-			_categories = await GetSubCategories();
-		}
+            _categories = await SubcategoryManager.GetSubCategories();
+        }
 
-		await GetSubCategories();
-		if (id <= _categories.Count)
+       
+
+        if (id <= _categories.Count)
 		{
 			var deleteCategory = _categories.Where(x => x.Id == id).FirstOrDefault();
 			_categories.Remove(deleteCategory);
