@@ -18,19 +18,7 @@ public static class SubcategoryManager
             subCategories.Add(new SubCategory { Id = 1, Name = "Playstation 5", UserThreads = userThreads });
             subCategories.Add(new SubCategory { Id = 2, Name = "Playstation 4", UserThreads = userThreads });
         }
-        //var subCategory = subCategories.Where(x => x.Id == 1).FirstOrDefault();
-        //var subCategory2 = subCategories.Where(x => x.Id == 2).FirstOrDefault();
-
-        //if (subCategory is null)
-        //{
-        //    subCategory.UserThreads = new();
-        //    subCategory.UserThreads.Add(userThreads[0]);
-        //}
-        //if (subCategory2 is null)
-        //{
-        //    subCategory2.UserThreads = new();
-        //    subCategory2.UserThreads.Add(userThreads[1]);
-        //}
+       
 
 
 
