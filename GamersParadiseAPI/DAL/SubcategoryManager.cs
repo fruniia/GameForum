@@ -8,7 +8,6 @@ public static class SubcategoryManager
     public static async Task<List<SubCategory>> GetSubCategories()
     {
 
-
         var subCategories = new List<SubCategory>();
         var userThreads = await GetAllUserThreads();
 

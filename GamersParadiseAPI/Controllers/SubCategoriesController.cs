@@ -6,16 +6,28 @@ public class SubCategoriesController : ControllerBase
 {
 	private static List<SubCategory> _categories;
 
+	MainCategory MainRoot { get; set; }
 
-	[HttpGet]
-	public async Task<List<SubCategory>> Get()
-	{
-		
-		_categories = await SubcategoryManager.GetSubCategories();
-		return _categories;
-	}
 
-	[HttpGet("{id}")]
+    //[HttpGet]
+    //public async Task<MainCategory> Get()
+    //{
+    //	MainRoot = new MainCategory();
+
+    //	MainRoot.SubCategories = await SubcategoryManager.GetSubCategories();
+    //	return MainRoot;
+    //}
+
+    [HttpGet]
+    public async Task<List<SubCategory>> Get()
+    {
+		List<SubCategory> categories = new();
+
+        categories = await SubcategoryManager.GetSubCategories();
+        return categories;
+    }
+
+    [HttpGet("{id}")]
 	public async Task<SubCategory> GetOneSubCategory(int id)
 	{
 		if (_categories is null)
@@ -35,7 +47,7 @@ public class SubCategoriesController : ControllerBase
             _categories = await SubcategoryManager.GetSubCategories();
         }
         subCategory.Id = _categories.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
-		subCategory.UserThreads = null;
+		subCategory.UserThreads = new();
 		_categories.Add(subCategory);
 	}
 
