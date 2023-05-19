@@ -6,25 +6,11 @@ public class SubCategoriesController : ControllerBase
 {
 	private static List<SubCategory> _categories;
 
-	MainCategory MainRoot { get; set; }
-
-
-    //[HttpGet]
-    //public async Task<MainCategory> Get()
-    //{
-    //	MainRoot = new MainCategory();
-
-    //	MainRoot.SubCategories = await SubcategoryManager.GetSubCategories();
-    //	return MainRoot;
-    //}
-
     [HttpGet]
     public async Task<List<SubCategory>> Get()
     {
-		List<SubCategory> categories = new();
-
-        categories = await SubcategoryManager.GetSubCategories();
-        return categories;
+        _categories = await SubCategoryManager.GetSubCategories();
+        return _categories;
     }
 
     [HttpGet("{id}")]
@@ -32,7 +18,7 @@ public class SubCategoriesController : ControllerBase
 	{
 		if (_categories is null)
 		{
-			_categories = await SubcategoryManager.GetSubCategories();
+			_categories = await SubCategoryManager.GetSubCategories();
 		}
 		var category = _categories.Where(x => x.Id == id).FirstOrDefault();
 
@@ -44,10 +30,9 @@ public class SubCategoriesController : ControllerBase
 	{
 		if (_categories is null)
 		{
-            _categories = await SubcategoryManager.GetSubCategories();
+            _categories = await SubCategoryManager.GetSubCategories();
         }
         subCategory.Id = _categories.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
-		subCategory.UserThreads = new();
 		_categories.Add(subCategory);
 	}
 
@@ -56,14 +41,13 @@ public class SubCategoriesController : ControllerBase
 	{
 		if (_categories is null)
 		{
-            _categories = await SubcategoryManager.GetSubCategories();
+            _categories = await SubCategoryManager.GetSubCategories();
         }
 
         var category = _categories.Where(x => x.Id == id).FirstOrDefault();
 		if (category is not null)
 		{
 			category.Name = subCategory.Name;
-			category.UserThreads = subCategory.UserThreads;
 
 		}
 
@@ -74,7 +58,7 @@ public class SubCategoriesController : ControllerBase
 	{
 		if (_categories is null)
 		{
-            _categories = await SubcategoryManager.GetSubCategories();
+            _categories = await SubCategoryManager.GetSubCategories();
         }
 
        

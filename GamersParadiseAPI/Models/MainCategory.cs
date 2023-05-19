@@ -2,6 +2,7 @@
 {
     public class MainCategory
     {
-        public List<SubCategory> SubCategories {  get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
