@@ -2,7 +2,7 @@
 
 [Route("api/[controller]")]
 [ApiController]
-public class SubCategoriesController : ControllerBase
+public class SubCategoryController : ControllerBase
 {
 	private static List<SubCategory> _categories;
 
