@@ -11,8 +11,8 @@
             if (MainCategory is null)
             {
                 MainCategory = new List<MainCategory>();
-                mainCategories.Add(new MainCategory { Id = 1, Name = "Playstation" });
-                mainCategories.Add(new MainCategory { Id = 2, Name = "XBOX" });
+                //mainCategories.Add(new MainCategory { Id = 1, Name = "Playstation" });
+                //mainCategories.Add(new MainCategory { Id = 2, Name = "XBOX" });
             }
 
             MainCategory.AddRange(mainCategories);

@@ -35,7 +35,7 @@ namespace GamersParadiseAPI.Controllers
             {
                 _comments = await CommentManager.GetComments();
             }
-            comment.Id = _comments.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
+            //comment.Id = _comments.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
             _comments.Add(comment);
         }
 

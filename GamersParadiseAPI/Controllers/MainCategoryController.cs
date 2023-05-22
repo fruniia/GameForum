@@ -9,7 +9,7 @@ public class MainCategoryController : ControllerBase
     [HttpGet]
     public async Task<List<MainCategory>> Get()
     {
-        _categories = await MainCategoryManager.GetMainCategories(); 
+        _categories = await MainCategoryManager.GetMainCategories();
         return _categories;
     }
 
@@ -32,7 +32,7 @@ public class MainCategoryController : ControllerBase
         {
             _categories = await MainCategoryManager.GetMainCategories();
         }
-        mainCategory.Id = _categories.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
+        //mainCategory.Id = _categories.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
         _categories.Add(mainCategory);
     }
 
@@ -62,11 +62,9 @@ public class MainCategoryController : ControllerBase
 
         }
 
-        if (id <= _categories.Count)
-        {
-            var deleteCategory = _categories.Where(x => x.Id == id).FirstOrDefault();
-            _categories.Remove(deleteCategory);
-        }
+        var deleteCategory = _categories.Where(x => x.Id == id).FirstOrDefault();
+        _categories.Remove(deleteCategory);
+
     }
 
 }

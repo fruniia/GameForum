@@ -12,8 +12,8 @@ public static class SubCategoryManager
         if (SubCategory is null)
         {
             SubCategory = new List<SubCategory>();
-            subCategories.Add(new SubCategory { Id = 1, Name = "Playstation 5" });
-            subCategories.Add(new SubCategory { Id = 2, Name = "Playstation 4" });
+            //subCategories.Add(new SubCategory { Id = 1, Name = "Playstation 5" });
+            //subCategories.Add(new SubCategory { Id = 2, Name = "Playstation 4" });
         }
        
         SubCategory.AddRange(subCategories);

@@ -37,7 +37,7 @@ namespace GamersParadiseAPI.Controllers
                 _userThreads = await UserThreadManager.GetAllUserThreads();
             }
 
-            userThread.Id = _userThreads.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
+            //userThread.Id = _userThreads.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
 
             _userThreads.Add(userThread);
         }

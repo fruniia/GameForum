@@ -11,8 +11,8 @@
             if (Comments is null)
             {
                 Comments = new List<Comment>();
-                comments.Add(new Comment { Id = 1, Score = 1, Content = "Jag gillar också spel", Date = DateTime.Now});
-                comments.Add(new Comment { Id = 2, Score = 2, Content = "Jag gillar också spel 2", Date = DateTime.Now });
+                //comments.Add(new Comment { Id = 1, Score = 1, Content = "Jag gillar också spel", Date = DateTime.Now});
+                //comments.Add(new Comment { Id = 2, Score = 2, Content = "Jag gillar också spel 2", Date = DateTime.Now });
             }
 
             Comments.AddRange(comments);

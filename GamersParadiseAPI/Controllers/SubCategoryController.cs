@@ -32,7 +32,7 @@ public class SubCategoryController : ControllerBase
 		{
             _categories = await SubCategoryManager.GetSubCategories();
         }
-        subCategory.Id = _categories.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
+        //subCategory.Id = _categories.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
 		_categories.Add(subCategory);
 	}
 
