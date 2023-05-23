@@ -11,11 +11,7 @@ public static class UserThreadManager
 
         if (UserThreads is null)
         {
-            UserThreads = new List<UserThread>();
-
-            userThreads.Add(new UserThread { Id = 1, Header = "Jag gillar spel", Score = 0, Content = "Jag gillar att spela spel", Date = DateTime.Now });
-            userThreads.Add(new UserThread { Id = 2, Header = "Jag gillar spel 2", Score = 3, Content = "Jag gillar att spela spel 2", Date = DateTime.Now });
-            
+            UserThreads = new List<UserThread>();            
         }
         UserThreads.AddRange(userThreads);
         return UserThreads;

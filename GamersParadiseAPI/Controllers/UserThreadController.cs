@@ -70,11 +70,10 @@ namespace GamersParadiseAPI.Controllers
 
             }
 
-            if (id <= _userThreads.Count)
-            {
-                var deleteUserThread = _userThreads.Where(x => x.Id == id).FirstOrDefault();
-                _userThreads.Remove(deleteUserThread);
-            }
+
+            var deleteUserThread = _userThreads.Where(x => x.Id == id).FirstOrDefault();
+            _userThreads.Remove(deleteUserThread);
+
         }
     }
 }

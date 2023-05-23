@@ -66,15 +66,14 @@ namespace GamersParadiseAPI.Controllers
 
             }
 
-            if (id <= _comments.Count)
-            {
+            
                 var deleteComment = _comments.Where(x => x.Id == id).FirstOrDefault();
                 if (deleteComment is not null)
                 {
                     _comments.Remove(deleteComment);
                 }
 
-            }
+           
         }
     }
 }
