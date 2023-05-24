@@ -33,6 +33,7 @@ public class MainCategoryController : ControllerBase
     [HttpPost]
     public async Task CreateMainCategory([FromBody] MainCategory mainCategory)
     {
+        mainCategory.Id = 0;
         await _mainCategoryManager.AddMainCategory(mainCategory);
     }
 
