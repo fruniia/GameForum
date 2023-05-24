@@ -1,70 +1,50 @@
-﻿namespace GamersParadiseAPI.Controllers;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace GamersParadiseAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class MainCategoryController : ControllerBase
 {
-    private static List<MainCategory> _categories;
+    private readonly MainCategoryManager _mainCategoryManager;
 
+    public MainCategoryController(MainCategoryManager mainCategoryManager)
+    {
+        _mainCategoryManager = mainCategoryManager;
+    }
     [HttpGet]
     public async Task<List<MainCategory>> Get()
     {
-        _categories = await MainCategoryManager.GetMainCategories();
-        return _categories;
+        var mainCategories = await _mainCategoryManager.GetMainCategories();
+        return mainCategories;
     }
 
     [HttpGet("{id}")]
     public async Task<MainCategory> GetOneMainCategory(int id)
     {
-        if (_categories is null)
-        {
-            _categories = await MainCategoryManager.GetMainCategories();
-        }
-        var category = _categories.Where(x => x.Id == id).FirstOrDefault();
+        var mainCategories = await _mainCategoryManager.GetMainCategories();
 
-        return category;
+        var mainCategory = mainCategories.Where(x => x.Id == id).FirstOrDefault();
+
+        return mainCategory;
     }
 
     [HttpPost]
     public async Task CreateMainCategory([FromBody] MainCategory mainCategory)
     {
-        if (_categories is null)
-        {
-            _categories = await MainCategoryManager.GetMainCategories();
-        }
-        //mainCategory.Id = _categories.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
-        _categories.Add(mainCategory);
+        await _mainCategoryManager.AddMainCategory(mainCategory);
     }
 
     [HttpPut("{id}")]
     public async Task UpdateMainCategory([FromBody] MainCategory mainCategory, int id)
     {
-        if (_categories is null)
-        {
-            _categories = await MainCategoryManager.GetMainCategories();
-        }
-
-        var category = _categories.Where(x => x.Id == id).FirstOrDefault();
-        if (category is not null)
-        {
-            category.Name = mainCategory.Name;
-
-        }
-
+        await _mainCategoryManager.UpdateMainCategory(mainCategory, id);
     }
 
     [HttpDelete("{id}")]
     public async Task DeleteMainCategory(int id)
     {
-        if (_categories is null)
-        {
-            _categories = await MainCategoryManager.GetMainCategories();
-
-        }
-
-        var deleteCategory = _categories.Where(x => x.Id == id).FirstOrDefault();
-        _categories.Remove(deleteCategory);
-
+        await _mainCategoryManager.DeleteMainCategory(id);
     }
 
 }

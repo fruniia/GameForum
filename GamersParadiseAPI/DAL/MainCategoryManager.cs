@@ -1,23 +1,48 @@
-﻿namespace GamersParadiseAPI.DAL
+﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+
+namespace GamersParadiseAPI.DAL
 {
-    public static class MainCategoryManager
+    public class MainCategoryManager
     {
-        public static List<MainCategory> MainCategory { get; set; }
-
-        public static async Task<List<MainCategory>> GetMainCategories()
+        private readonly ForumDbContext _context;
+        public MainCategoryManager(ForumDbContext context)
         {
-            var mainCategories = new List<MainCategory>();
+            _context = context;
+        }
 
-            if (MainCategory is null)
+        public async Task<List<MainCategory>> GetMainCategories()
+        {
+            List<MainCategory> mainCategories = await _context.MainCategories.ToListAsync();
+
+            return mainCategories;
+        }
+
+        public async Task AddMainCategory(MainCategory mainCategory)
+        {
+            await _context.MainCategories.AddAsync(mainCategory);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateMainCategory(MainCategory mainCategory, int id)
+        {
+            var mainCategoryToUpdate = _context.MainCategories.FirstOrDefault(c => c.Id == id);
+
+            if (mainCategoryToUpdate != null)
             {
-                MainCategory = new List<MainCategory>();
-                //mainCategories.Add(new MainCategory { Id = 1, Name = "Playstation" });
-                //mainCategories.Add(new MainCategory { Id = 2, Name = "XBOX" });
+                mainCategoryToUpdate.Name = mainCategory.Name;
             }
+            await _context.SaveChangesAsync();
+        }
 
-            MainCategory.AddRange(mainCategories);
+        public async Task DeleteMainCategory(int id)
+        {
+            var deleteMainCategory = _context.MainCategories.FirstOrDefault(x => x.Id == id);
 
-            return MainCategory;
+            if (deleteMainCategory != null)
+            {
+                _context.MainCategories.Remove(deleteMainCategory);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

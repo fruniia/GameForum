@@ -4,8 +4,11 @@
 [ApiController]
 public class SubCategoryController : ControllerBase
 {
-    private static List<SubCategory> _categories;
-
+    private readonly ForumDbContext _context;
+    public SubCategoryController(ForumDbContext context)
+    {
+        _context = context;
+    }
     [HttpGet]
     public async Task<List<SubCategory>> Get()
     {
