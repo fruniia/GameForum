@@ -8,72 +8,43 @@ namespace GamersParadiseAPI.Controllers
     [ApiController]
     public class UserThreadController : ControllerBase
     {
-        private static List<UserThread> _userThreads;
+        private readonly UserThreadManager _userThreadManager;
+        public UserThreadController(UserThreadManager userThreadManager)
+        {
+            _userThreadManager = userThreadManager;
+        }
 
         [HttpGet]
         public async Task<List<UserThread>> Get()
         {
-            _userThreads = await UserThreadManager.GetAllUserThreads();
-            return _userThreads;
+            var userThreads = await _userThreadManager.GetUserThreads();
+            return userThreads;
         }
 
         [HttpGet("{id}")]
         public async Task<UserThread> GetOneUserThread(int id)
         {
-            if (_userThreads is null)
-            {
-                _userThreads = await UserThreadManager.GetAllUserThreads();
-            }
-            var userThread = _userThreads.Where(x => x.Id == id).FirstOrDefault();
-
+            var userThread = await _userThreadManager.GetOneUserThread(id);
             return userThread;
         }
 
         [HttpPost]
         public async Task CreateUserThread([FromBody] UserThread userThread)
         {
-            if (_userThreads is null)
-            {
-                _userThreads = await UserThreadManager.GetAllUserThreads();
-            }
-
-            //userThread.Id = _userThreads.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
-
-            _userThreads.Add(userThread);
+            await _userThreadManager.AddUserThread(userThread);
         }
 
         [HttpPut("{id}")]
-        public async Task UpdateUserThread([FromBody] UserThread userThread, int id)
+        public async Task UpdateMainCategory([FromBody] UserThread userThread, int id)
         {
-            if (_userThreads is null)
-            {
-                _userThreads = await UserThreadManager.GetAllUserThreads();
-            }
-
-            var existingUserThread = _userThreads.Where(x => x.Id == id).FirstOrDefault();
-            if (userThread is not null)
-            {
-                existingUserThread.Header = userThread.Header;
-                existingUserThread.Content = userThread.Content;
-                existingUserThread.Score = userThread.Score;
-
-            }
-
+            await _userThreadManager.UpdateUserThread(userThread, id);
         }
 
         [HttpDelete("{id}")]
-        public async Task DeleteUserThread(int id)
+        public async Task DeleteMainCategory(int id)
         {
-            if (_userThreads is null)
-            {
-                _userThreads = await UserThreadManager.GetAllUserThreads();
-
-            }
-
-
-            var deleteUserThread = _userThreads.Where(x => x.Id == id).FirstOrDefault();
-            _userThreads.Remove(deleteUserThread);
-
+            await _userThreadManager.DeleteUserThread(id);
         }
+
     }
 }

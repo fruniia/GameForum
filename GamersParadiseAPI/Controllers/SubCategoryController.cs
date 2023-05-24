@@ -1,75 +1,47 @@
-﻿namespace GamersParadiseAPI.Controllers;
+﻿using GamersParadiseAPI.DAL;
+
+namespace GamersParadiseAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class SubCategoryController : ControllerBase
 {
-    private readonly ForumDbContext _context;
-    public SubCategoryController(ForumDbContext context)
+    private readonly SubCategoryManager _subCategoryManager;
+    public SubCategoryController(SubCategoryManager subCategoryManager)
     {
-        _context = context;
+        _subCategoryManager = subCategoryManager;
     }
+
     [HttpGet]
     public async Task<List<SubCategory>> Get()
     {
-        _categories = await SubCategoryManager.GetSubCategories();
-        return _categories;
+        var subCategories = await _subCategoryManager.GetSubCategories();
+        return subCategories;
     }
 
     [HttpGet("{id}")]
     public async Task<SubCategory> GetOneSubCategory(int id)
     {
-        if (_categories is null)
-        {
-            _categories = await SubCategoryManager.GetSubCategories();
-        }
-        var category = _categories.Where(x => x.Id == id).FirstOrDefault();
-
-        return category;
+        var subCategory = await _subCategoryManager.GetOneSubCategory(id);
+        return subCategory;
     }
 
     [HttpPost]
     public async Task CreateSubCategory([FromBody] SubCategory subCategory)
     {
-        if (_categories is null)
-        {
-            _categories = await SubCategoryManager.GetSubCategories();
-        }
-        //subCategory.Id = _categories.TakeLast(1).Select(x => x.Id).FirstOrDefault() + 1;
-        _categories.Add(subCategory);
+        await _subCategoryManager.AddSubCategory(subCategory);
     }
 
     [HttpPut("{id}")]
     public async Task UpdateSubCategory([FromBody] SubCategory subCategory, int id)
     {
-        if (_categories is null)
-        {
-            _categories = await SubCategoryManager.GetSubCategories();
-        }
-
-        var category = _categories.Where(x => x.Id == id).FirstOrDefault();
-        if (category is not null)
-        {
-            category.Name = subCategory.Name;
-
-        }
-
+        await _subCategoryManager.UpdateSubCategory(subCategory, id);
     }
 
     [HttpDelete("{id}")]
     public async Task DeleteSubCategory(int id)
     {
-        if (_categories is null)
-        {
-            _categories = await SubCategoryManager.GetSubCategories();
-        }
-
-
-
-
-        var deleteCategory = _categories.Where(x => x.Id == id).FirstOrDefault();
-        _categories.Remove(deleteCategory);
-
+        await _subCategoryManager.DeleteSubCategory(id);
     }
 
 }

@@ -1,19 +1,51 @@
 ﻿namespace GamersParadiseAPI.DAL;
 
-public static class UserThreadManager
+public class UserThreadManager
 {
-    public static List<UserThread> UserThreads { get; set; }
-
-
-    public static async Task<List<UserThread>> GetAllUserThreads()      //Denna ska in i projektet.
+    private readonly ForumDbContext _context;
+    public UserThreadManager(ForumDbContext context)
     {
-        var userThreads = new List<UserThread>();
-
-        if (UserThreads is null)
-        {
-            UserThreads = new List<UserThread>();            
-        }
-        UserThreads.AddRange(userThreads);
-        return UserThreads;
+        _context = context;
     }
+    public async Task<List<UserThread>> GetUserThreads()
+    {
+        List<UserThread> userThreads = await _context.UserThreads.ToListAsync();
+
+        return userThreads;
+    }
+    public async Task<UserThread> GetOneUserThread(int id)
+    {
+        var userThreads = await GetUserThreads();
+
+        var userThread = userThreads.FirstOrDefault(x => x.Id == id);
+
+        return userThread;
+    }
+    public async Task AddUserThread(UserThread userThread)
+    {
+        await _context.UserThreads.AddAsync(userThread);
+        await _context.SaveChangesAsync();
+    }
+    public async Task UpdateUserThread(UserThread userThread, int id)
+    {
+        var userThreadToUpdate = _context.UserThreads.FirstOrDefault(c => c.Id == id);
+
+        if (userThreadToUpdate != null)
+        {
+            userThreadToUpdate.Header = userThread.Header;
+            userThreadToUpdate.Content = userThread.Content;
+        }
+        await _context.SaveChangesAsync();
+    }
+    public async Task DeleteUserThread(int id)
+    {
+        var deleteUserThread = _context.UserThreads.FirstOrDefault(x => x.Id == id);
+
+        if (deleteUserThread != null)
+        {
+            _context.UserThreads.Remove(deleteUserThread);
+            await _context.SaveChangesAsync();
+        }
+    }
+
 }

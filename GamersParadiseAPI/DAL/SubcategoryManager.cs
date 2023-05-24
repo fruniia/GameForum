@@ -1,24 +1,51 @@
-﻿using GamersParadiseAPI.Models;
-
-namespace GamersParadiseAPI.DAL;
-public static class SubCategoryManager
+﻿namespace GamersParadiseAPI.DAL;
+public class SubCategoryManager
 {
-    public static List<SubCategory> SubCategory { get; set; }
-
-    public static async Task<List<SubCategory>> GetSubCategories()
+    private readonly ForumDbContext _context;
+    public SubCategoryManager(ForumDbContext context)
     {
-        var subCategories = new List<SubCategory>();
+        _context = context;
+    }
 
-        if (SubCategory is null)
+    public async Task<List<SubCategory>> GetSubCategories()
+    {
+        List<SubCategory> subCategories = await _context.SubCategories.ToListAsync();
+        return subCategories;
+    }
+
+    public async Task<SubCategory> GetOneSubCategory(int id)
+    {
+        var subCategories = await GetSubCategories();
+        var subCategory = subCategories.FirstOrDefault(x => x.Id == id);
+        return subCategory;
+    }
+
+    public async Task AddSubCategory(SubCategory subCategory)
+    {
+        await _context.SubCategories.AddAsync(subCategory);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateSubCategory(SubCategory subCategory, int id)
+    {
+        var subCategoryToUpdate = _context.SubCategories.FirstOrDefault(c => c.Id == id);
+
+        if (subCategoryToUpdate != null)
         {
-            SubCategory = new List<SubCategory>();
-            //subCategories.Add(new SubCategory { Id = 1, Name = "Playstation 5" });
-            //subCategories.Add(new SubCategory { Id = 2, Name = "Playstation 4" });
+            subCategoryToUpdate.Name = subCategory.Name;
         }
-       
-        SubCategory.AddRange(subCategories);
+        await _context.SaveChangesAsync();
+    }
 
-        return SubCategory;
+    public async Task DeleteSubCategory(int id)
+    {
+        var deleteSubCategory = _context.SubCategories.FirstOrDefault(x => x.Id == id);
+
+        if (deleteSubCategory != null)
+        {
+            _context.SubCategories.Remove(deleteSubCategory);
+            await _context.SaveChangesAsync();
+        }
     }
 
 }

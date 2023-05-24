@@ -12,6 +12,7 @@ public class MainCategoryController : ControllerBase
     {
         _mainCategoryManager = mainCategoryManager;
     }
+
     [HttpGet]
     public async Task<List<MainCategory>> Get()
     {
