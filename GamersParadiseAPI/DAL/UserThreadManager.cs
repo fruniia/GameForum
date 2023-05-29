@@ -34,6 +34,7 @@ public class UserThreadManager
         {
             userThreadToUpdate.Header = userThread.Header;
             userThreadToUpdate.Content = userThread.Content;
+            userThreadToUpdate.Reported = userThread.Reported;
         }
         await _context.SaveChangesAsync();
     }

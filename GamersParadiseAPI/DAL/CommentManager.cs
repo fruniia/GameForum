@@ -35,6 +35,7 @@
             if (commentToUpdate != null)
             {
                 commentToUpdate.Content = comment.Content;
+                commentToUpdate.Reported = comment.Reported;
             }
             await _context.SaveChangesAsync();
         }
