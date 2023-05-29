@@ -1,4 +1,6 @@
-﻿namespace GamersParadiseAPI.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace GamersParadiseAPI.Models;
 public class UserThread
 {
 	public int Id { get; set; }
@@ -9,6 +11,7 @@ public class UserThread
     public DateTime? EditedDate { get; set; }
     public int SubCategoryId { get; set; }
 	public string UserId { get; set; }
+	public bool Reported { get; set; }
 
 }
 
