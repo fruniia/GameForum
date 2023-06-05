@@ -35,6 +35,8 @@ public class UserThreadManager
             userThreadToUpdate.Header = userThread.Header;
             userThreadToUpdate.Content = userThread.Content;
             userThreadToUpdate.Reported = userThread.Reported;
+            userThreadToUpdate.Score = userThread.Score;
+            userThreadToUpdate.Image = userThread.Image;
         }
         await _context.SaveChangesAsync();
     }

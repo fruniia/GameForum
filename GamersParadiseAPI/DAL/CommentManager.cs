@@ -36,6 +36,7 @@
             {
                 commentToUpdate.Content = comment.Content;
                 commentToUpdate.Reported = comment.Reported;
+                commentToUpdate.Score = comment.Score;
             }
             await _context.SaveChangesAsync();
         }

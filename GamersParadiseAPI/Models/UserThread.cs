@@ -12,6 +12,7 @@ public class UserThread
     public int SubCategoryId { get; set; }
 	public string UserId { get; set; }
 	public bool Reported { get; set; }
+    public string? Image { get; set; }
 
 }
 
