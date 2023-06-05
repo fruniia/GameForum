@@ -36,7 +36,10 @@ public class UserThreadManager
             userThreadToUpdate.Content = userThread.Content;
             userThreadToUpdate.Reported = userThread.Reported;
             userThreadToUpdate.Score = userThread.Score;
-            userThreadToUpdate.Image = userThread.Image;
+            if (userThread.Image is not null)
+            {
+                userThreadToUpdate.Image = userThread.Image;
+            }
         }
         await _context.SaveChangesAsync();
     }
